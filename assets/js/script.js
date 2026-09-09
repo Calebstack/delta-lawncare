@@ -37,6 +37,12 @@ document.addEventListener("DOMContentLoaded", () => {
     revealObserver.observe(item);
   });
 
+    document.querySelector(".brand").addEventListener("click", (event) => {
+      event.preventDefault();
+      window.history.replaceState(null, "", window.location.pathname);
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    });
+
   document.querySelectorAll(".gallery-track").forEach((track) => {
     track.innerHTML += track.innerHTML;
   });
