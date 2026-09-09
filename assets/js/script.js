@@ -10,6 +10,7 @@ document.addEventListener("DOMContentLoaded", () => {
     menuToggle.setAttribute("aria-expanded", String(!isOpen));
     menuToggle.setAttribute("aria-label", isOpen ? "Open navigation menu" : "Close navigation menu");
     siteMenu.classList.toggle("is-open", !isOpen);
+    document.body.classList.toggle("menu-is-open", !isOpen);
   });
 
   siteMenu.querySelectorAll("a").forEach((link) => {
@@ -17,7 +18,23 @@ document.addEventListener("DOMContentLoaded", () => {
       menuToggle.setAttribute("aria-expanded", "false");
       menuToggle.setAttribute("aria-label", "Open navigation menu");
       siteMenu.classList.remove("is-open");
+      document.body.classList.remove("menu-is-open");
     });
+  });
+
+  const revealItems = document.querySelectorAll(".intro-grid, .stat-row, .section-heading, .gallery-rows, .contact-heading, .footer-main");
+  const revealObserver = new IntersectionObserver((entries, observer) => {
+    entries.forEach((entry) => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add("is-visible");
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.12 });
+
+  revealItems.forEach((item) => {
+    item.classList.add("reveal-on-scroll");
+    revealObserver.observe(item);
   });
 
   document.querySelectorAll(".gallery-track").forEach((track) => {
